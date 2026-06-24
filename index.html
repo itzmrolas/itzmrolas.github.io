@@ -5,11 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ITZMROLAS</title>
 
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="icon.png">
-<link rel="icon" type="image/jpeg" href="icon.jpg">
-<link rel="apple-touch-icon" href="icon.png">
-
 <style>
 * {
     margin: 0;
@@ -26,7 +21,6 @@ body {
     font-family: Arial, sans-serif;
     color: white;
     background: #05060a;
-    position: relative;
 }
 
 /* PS4-style waves */
@@ -37,8 +31,6 @@ body {
     background: radial-gradient(circle at center, rgba(0,120,255,0.25), transparent 60%);
     filter: blur(80px);
     animation: move 15s infinite linear;
-    pointer-events: none;
-    z-index: 0;
 }
 
 .wave:nth-child(2) { animation-duration: 22s; opacity: 0.6; }
@@ -58,9 +50,8 @@ body {
 }
 
 h1 {
-    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-size: 5rem;
     letter-spacing: 4px;
-    text-shadow: 0 0 20px rgba(0,120,255,0.4);
 }
 
 .name {
@@ -89,11 +80,6 @@ h1 {
 .links a:hover {
     background: rgba(0,120,255,0.3);
     border-color: rgba(0,120,255,0.8);
-}
-
-.links a:focus {
-    outline: 2px solid rgba(0,120,255,0.8);
-    outline-offset: 3px;
 }
 </style>
 </head>
