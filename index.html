@@ -18,6 +18,7 @@ body {
     background: #05060a;
     font-family: Arial, sans-serif;
     color: white;
+    user-select: none;
 }
 
 /* Stars */
@@ -30,7 +31,7 @@ body {
     z-index: 0;
 }
 
-/* Glow (original style kept) */
+/* Glow */
 .glow {
     position: absolute;
     width: 1500px;
@@ -84,13 +85,6 @@ h1 {
     text-shadow: 0 0 35px rgba(0,140,255,0.7);
 }
 
-.name {
-    margin-top: 10px;
-    margin-bottom: 30px;
-    font-size: 1.2rem;
-    color: #b8c7ff;
-}
-
 .links {
     display: flex;
     gap: 12px;
@@ -115,13 +109,53 @@ h1 {
     box-shadow: 0 0 25px rgba(0,120,255,0.4);
 }
 
-/* ✉️ EMAIL */
 .email {
     margin-top: 18px;
     font-size: 1rem;
     color: #b8c7ff;
+}
+
+/* ===== CONSOLE ===== */
+.console {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 280px;
+    background: rgba(10,10,20,0.85);
+    border: 1px solid rgba(0,120,255,0.4);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    font-size: 13px;
+}
+
+.console-header {
+    padding: 8px;
+    background: rgba(0,120,255,0.2);
+    cursor: grab;
+    font-weight: bold;
+}
+
+.console input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.console-output {
+    max-height: 120px;
+    overflow-y: auto;
+    padding: 8px;
+    font-size: 12px;
     opacity: 0.9;
-    letter-spacing: 1px;
+}
+
+.hidden {
+    display: none;
 }
 </style>
 </head>
@@ -147,8 +181,15 @@ h1 {
     <div class="email">itzmrolas@outlook.com</div>
 </div>
 
+<!-- CONSOLE UI -->
+<div id="console" class="console hidden">
+    <div class="console-header">DEV CONSOLE</div>
+    <input id="consoleInput" placeholder="Type command..." />
+    <div id="consoleOutput" class="console-output"></div>
+</div>
+
 <script>
-// Stars (unchanged)
+/* ===== STARS ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -164,7 +205,7 @@ class Star {
         this.size = Math.random() * 1.2;
         this.speedX = (Math.random() - 0.5) * 0.15;
         this.speedY = (Math.random() - 0.5) * 0.15;
-        this.opacity = Math.random();
+        this.opacity = 0.4 + Math.random() * 0.5;
     }
 
     update() {
@@ -175,9 +216,6 @@ class Star {
         if (this.x > canvas.width) this.x = 0;
         if (this.y < 0) this.y = canvas.height;
         if (this.y > canvas.height) this.y = 0;
-
-        this.opacity += (Math.random() - 0.5) * 0.03;
-        this.opacity = Math.max(0.2, Math.min(0.9, this.opacity));
     }
 
     draw() {
@@ -190,9 +228,7 @@ class Star {
 
 function init() {
     stars = [];
-    for (let i = 0; i < 70; i++) {
-        stars.push(new Star());
-    }
+    for (let i = 0; i < 70; i++) stars.push(new Star());
 }
 
 function animate() {
@@ -215,6 +251,103 @@ window.addEventListener("resize", () => {
     canvas.height = window.innerHeight;
     init();
 });
+
+/* ===== CONSOLE ===== */
+const consoleBox = document.getElementById("console");
+const input = document.getElementById("consoleInput");
+const output = document.getElementById("consoleOutput");
+
+let gmEnabled = false;
+
+/* toggle with / */
+window.addEventListener("keydown", (e) => {
+    if (e.key === "/" && document.activeElement !== input) {
+        e.preventDefault();
+        consoleBox.classList.toggle("hidden");
+        input.focus();
+    }
+});
+
+function log(msg) {
+    output.innerHTML += `<div>> ${msg}</div>`;
+    output.scrollTop = output.scrollHeight;
+}
+
+input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        const cmd = input.value.trim();
+        input.value = "";
+
+        if (cmd === "/time") {
+            log("Local Time: " + new Date().toLocaleTimeString());
+        }
+
+        else if (cmd === "/gm") {
+            gmEnabled = !gmEnabled;
+            enableDrag(gmEnabled);
+            log("GM mode: " + (gmEnabled ? "ON" : "OFF"));
+        }
+
+        else if (cmd.startsWith("/open")) {
+            const arg = cmd.split(" ")[1];
+
+            const links = {
+                yt: "https://www.youtube.com/@itzmrolas",
+                youtube: "https://www.youtube.com/@itzmrolas",
+                tiktok: "https://www.tiktok.com/@itzmrolas",
+                insta: "https://www.instagram.com/itzmrolas",
+                instagram: "https://www.instagram.com/itzmrolas",
+                spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm"
+            };
+
+            if (links[arg]) {
+                window.open(links[arg], "_blank");
+                log("Opening " + arg);
+            } else {
+                log("Unknown platform");
+            }
+        }
+
+        else {
+            log("Unknown command");
+        }
+    }
+});
+
+/* ===== DRAG MODE ===== */
+function enableDrag(enable) {
+    const elements = document.querySelectorAll(".links a");
+
+    elements.forEach(el => {
+        el.style.position = enable ? "absolute" : "";
+        el.style.cursor = enable ? "move" : "";
+
+        if (!enable) return;
+
+        el.onmousedown = (e) => {
+            let shiftX = e.clientX - el.getBoundingClientRect().left;
+            let shiftY = e.clientY - el.getBoundingClientRect().top;
+
+            function moveAt(pageX, pageY) {
+                el.style.left = pageX - shiftX + "px";
+                el.style.top = pageY - shiftY + "px";
+            }
+
+            function onMouseMove(e) {
+                moveAt(e.pageX, e.pageY);
+            }
+
+            document.addEventListener("mousemove", onMouseMove);
+
+            el.onmouseup = () => {
+                document.removeEventListener("mousemove", onMouseMove);
+                el.onmouseup = null;
+            };
+        };
+
+        el.ondragstart = () => false;
+    });
+}
 </script>
 
 </body>
