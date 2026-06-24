@@ -79,6 +79,7 @@ h1 {
     letter-spacing: 6px;
 }
 
+/* buttons */
 .links {
     display: flex;
     gap: 12px;
@@ -92,9 +93,17 @@ h1 {
     text-decoration: none;
     color: white;
     background: rgba(255,255,255,0.03);
+    transition: 0.2s;
 }
 
-/* console */
+.links a:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0,120,255,0.8);
+    background: rgba(0,120,255,0.25);
+    box-shadow: 0 0 25px rgba(0,120,255,0.4);
+}
+
+/* ===== CONSOLE (TOP LAYER + DRAG FIX) ===== */
 .console {
     position: fixed;
     bottom: 20px;
@@ -107,7 +116,8 @@ h1 {
     border: 1px solid rgba(0,120,255,0.4);
     border-radius: 10px;
     backdrop-filter: blur(10px);
-    z-index: 9999;
+
+    z-index: 999999; /* 🔥 TOP LAYER FIX */
 
     overflow: hidden;
 }
@@ -169,13 +179,13 @@ h1 {
 </div>
 
 <script>
+/* ===== STARS ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-/* stars */
 class Star {
     constructor() {
         this.x = Math.random() * canvas.width;
@@ -184,6 +194,7 @@ class Star {
         this.speedX = (Math.random() - 0.5) * 0.15;
         this.speedY = (Math.random() - 0.5) * 0.15;
     }
+
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
@@ -193,6 +204,7 @@ class Star {
         if (this.y < 0) this.y = canvas.height;
         if (this.y > canvas.height) this.y = 0;
     }
+
     draw() {
         ctx.fillStyle = "white";
         ctx.beginPath();
@@ -213,11 +225,13 @@ function animate() {
 }
 animate();
 
-/* console */
+/* ===== CONSOLE ===== */
 const consoleBox = document.getElementById("console");
 const input = document.getElementById("consoleInput");
 const output = document.getElementById("consoleOutput");
+const header = document.getElementById("consoleHeader");
 
+/* toggle */
 window.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== input) {
         e.preventDefault();
@@ -235,29 +249,20 @@ function log(msg) {
     output.scrollTop = output.scrollHeight;
 }
 
+/* commands */
 input.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
 
     const cmd = input.value.trim();
     input.value = "";
 
-    if (cmd === "/time") {
-        log(new Date().toLocaleTimeString());
-    }
-
-    else if (cmd === "/name") {
-        log("my name is alex");
-    }
-
-    else if (cmd === "/mail") {
-        log("Contact me: itzmrolas@outlook.com");
-    }
-
+    if (cmd === "/time") log(new Date().toLocaleTimeString());
+    else if (cmd === "/name") log("my name is alex");
+    else if (cmd === "/mail") log("Contact me: itzmrolas@outlook.com");
     else if (cmd === "/chess") {
         window.open("https://www.chess.com", "_blank");
         log("opening chess.com");
     }
-
     else if (cmd === "/help") {
         log("Commands:");
         log("/time");
@@ -265,7 +270,6 @@ input.addEventListener("keydown", (e) => {
         log("/chess");
         log("/mail");
     }
-
     else if (cmd.startsWith("/open")) {
         const arg = cmd.split(" ")[1];
 
@@ -281,8 +285,33 @@ input.addEventListener("keydown", (e) => {
         if (links[arg]) window.open(links[arg], "_blank");
         else log("unknown platform");
     }
-
     else log("unknown command");
+});
+
+/* ===== DRAG CONSOLE (FIXED TOP LAYER DRAG) ===== */
+let dragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+header.addEventListener("mousedown", (e) => {
+    dragging = true;
+
+    offsetX = e.clientX - consoleBox.offsetLeft;
+    offsetY = e.clientY - consoleBox.offsetTop;
+
+    document.body.style.cursor = "grabbing";
+});
+
+document.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+
+    consoleBox.style.left = (e.clientX - offsetX) + "px";
+    consoleBox.style.top = (e.clientY - offsetY) + "px";
+});
+
+document.addEventListener("mouseup", () => {
+    dragging = false;
+    document.body.style.cursor = "default";
 });
 </script>
 
