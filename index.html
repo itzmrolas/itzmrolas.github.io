@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Put your HTML text here<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -30,7 +30,7 @@ body {
     z-index: 0;
 }
 
-/* 🔥 1500px MAIN GLOW */
+/* glow */
 .glow {
     position: absolute;
     width: 1500px;
@@ -44,7 +44,6 @@ body {
     animation: move 18s ease-in-out infinite;
 }
 
-/* secondary glow layer (slightly smaller intensity) */
 .glow:nth-child(2) {
     width: 1700px;
     height: 1700px;
@@ -61,7 +60,6 @@ body {
     opacity: 0.5;
 }
 
-/* smooth float loop */
 @keyframes move {
     0%   { transform: translate(-30%, -30%); }
     50%  { transform: translate(30%, 25%); }
@@ -117,6 +115,13 @@ h1 {
     background: rgba(0,120,255,0.25);
     box-shadow: 0 0 25px rgba(0,120,255,0.4);
 }
+
+.email {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #b8c7ff;
+    opacity: 0.8;
+}
 </style>
 </head>
 
@@ -138,6 +143,8 @@ h1 {
         <a href="https://www.youtube.com/@itzmrolas" target="_blank">YouTube</a>
         <a href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm" target="_blank">Spotify</a>
     </div>
+
+    <div class="email">itzmrolas@outlook.com</div>
 </div>
 
 <script>
