@@ -21,17 +21,15 @@ body {
     user-select: none;
 }
 
-/* Stars */
+/* canvas */
 #particles {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
 }
 
-/* Glow */
+/* glow */
 .glow {
     position: absolute;
     width: 1500px;
@@ -39,7 +37,6 @@ body {
     border-radius: 50%;
     background: radial-gradient(circle, rgba(0,120,255,0.35), transparent 65%);
     filter: blur(120px);
-    opacity: 0.95;
     mix-blend-mode: screen;
     z-index: 1;
     animation: move 18s ease-in-out infinite;
@@ -50,7 +47,6 @@ body {
     height: 1700px;
     background: radial-gradient(circle, rgba(120,180,255,0.18), transparent 70%);
     animation-duration: 24s;
-    opacity: 0.7;
 }
 
 .glow:nth-child(3) {
@@ -58,16 +54,15 @@ body {
     height: 1600px;
     background: radial-gradient(circle, rgba(0,120,255,0.12), transparent 75%);
     animation-duration: 30s;
-    opacity: 0.5;
 }
 
 @keyframes move {
-    0%   { transform: translate(-30%, -30%); }
-    50%  { transform: translate(30%, 25%); }
+    0% { transform: translate(-30%, -30%); }
+    50% { transform: translate(30%, 25%); }
     100% { transform: translate(-30%, -30%); }
 }
 
-/* Content */
+/* content */
 .content {
     position: relative;
     z-index: 2;
@@ -82,51 +77,39 @@ body {
 h1 {
     font-size: 5rem;
     letter-spacing: 6px;
-    text-shadow: 0 0 35px rgba(0,140,255,0.7);
 }
 
 .links {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .links a {
-    color: white;
-    text-decoration: none;
     padding: 12px 18px;
     border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.2);
+    text-decoration: none;
+    color: white;
     background: rgba(255,255,255,0.03);
-    transition: 0.2s;
 }
 
-.links a:hover {
-    transform: translateY(-2px);
-    border-color: rgba(0,120,255,0.8);
-    background: rgba(0,120,255,0.25);
-    box-shadow: 0 0 25px rgba(0,120,255,0.4);
-}
-
-.email {
-    margin-top: 18px;
-    font-size: 1rem;
-    color: #b8c7ff;
-}
-
-/* ===== CONSOLE ===== */
+/* console */
 .console {
     position: fixed;
     bottom: 20px;
     left: 20px;
+
     width: 280px;
+    height: 180px;
+
     background: rgba(10,10,20,0.85);
     border: 1px solid rgba(0,120,255,0.4);
     border-radius: 10px;
     backdrop-filter: blur(10px);
     z-index: 9999;
-    font-size: 13px;
+
+    overflow: hidden;
 }
 
 .console-header {
@@ -147,11 +130,10 @@ h1 {
 }
 
 .console-output {
-    max-height: 120px;
+    height: 110px;
     overflow-y: auto;
     padding: 8px;
     font-size: 12px;
-    opacity: 0.9;
 }
 
 .hidden {
@@ -172,32 +154,28 @@ h1 {
     <h1>ITZMROLAS</h1>
 
     <div class="links">
-        <a href="https://www.tiktok.com/@itzmrolas" target="_blank">TikTok</a>
-        <a href="https://www.instagram.com/itzmrolas" target="_blank">Instagram</a>
-        <a href="https://www.youtube.com/@itzmrolas" target="_blank">YouTube</a>
-        <a href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm" target="_blank">Spotify</a>
+        <a href="https://www.tiktok.com/@itzmrolas">TikTok</a>
+        <a href="https://www.instagram.com/itzmrolas">Instagram</a>
+        <a href="https://www.youtube.com/@itzmrolas">YouTube</a>
+        <a href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm">Spotify</a>
     </div>
-
-    <div class="email">itzmrolas@outlook.com</div>
 </div>
 
-<!-- CONSOLE UI -->
+<!-- console -->
 <div id="console" class="console hidden">
-    <div class="console-header">DEV CONSOLE</div>
+    <div class="console-header" id="consoleHeader">DEV CONSOLE</div>
     <input id="consoleInput" placeholder="Type command..." />
     <div id="consoleOutput" class="console-output"></div>
 </div>
 
 <script>
-/* ===== STARS ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let stars = [];
-
+/* stars */
 class Star {
     constructor() {
         this.x = Math.random() * canvas.width;
@@ -205,9 +183,7 @@ class Star {
         this.size = Math.random() * 1.2;
         this.speedX = (Math.random() - 0.5) * 0.15;
         this.speedY = (Math.random() - 0.5) * 0.15;
-        this.opacity = 0.4 + Math.random() * 0.5;
     }
-
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
@@ -217,54 +193,40 @@ class Star {
         if (this.y < 0) this.y = canvas.height;
         if (this.y > canvas.height) this.y = 0;
     }
-
     draw() {
-        ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
+        ctx.fillStyle = "white";
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
     }
 }
 
-function init() {
-    stars = [];
-    for (let i = 0; i < 70; i++) stars.push(new Star());
-}
+let stars = [];
+for (let i = 0; i < 70; i++) stars.push(new Star());
 
 function animate() {
     ctx.fillStyle = "rgba(5,6,10,0.35)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    for (let s of stars) {
-        s.update();
-        s.draw();
-    }
-
+    stars.forEach(s => { s.update(); s.draw(); });
     requestAnimationFrame(animate);
 }
-
-init();
 animate();
 
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    init();
-});
-
-/* ===== CONSOLE ===== */
+/* console */
 const consoleBox = document.getElementById("console");
 const input = document.getElementById("consoleInput");
 const output = document.getElementById("consoleOutput");
 
-let gmEnabled = false;
-
-/* toggle with / */
 window.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== input) {
         e.preventDefault();
         consoleBox.classList.toggle("hidden");
         input.focus();
+    }
+
+    if (e.key === "Escape") {
+        consoleBox.classList.add("hidden");
     }
 });
 
@@ -274,80 +236,54 @@ function log(msg) {
 }
 
 input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        const cmd = input.value.trim();
-        input.value = "";
+    if (e.key !== "Enter") return;
 
-        if (cmd === "/time") {
-            log("Local Time: " + new Date().toLocaleTimeString());
-        }
+    const cmd = input.value.trim();
+    input.value = "";
 
-        else if (cmd === "/gm") {
-            gmEnabled = !gmEnabled;
-            enableDrag(gmEnabled);
-            log("GM mode: " + (gmEnabled ? "ON" : "OFF"));
-        }
-
-        else if (cmd.startsWith("/open")) {
-            const arg = cmd.split(" ")[1];
-
-            const links = {
-                yt: "https://www.youtube.com/@itzmrolas",
-                youtube: "https://www.youtube.com/@itzmrolas",
-                tiktok: "https://www.tiktok.com/@itzmrolas",
-                insta: "https://www.instagram.com/itzmrolas",
-                instagram: "https://www.instagram.com/itzmrolas",
-                spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm"
-            };
-
-            if (links[arg]) {
-                window.open(links[arg], "_blank");
-                log("Opening " + arg);
-            } else {
-                log("Unknown platform");
-            }
-        }
-
-        else {
-            log("Unknown command");
-        }
+    if (cmd === "/time") {
+        log(new Date().toLocaleTimeString());
     }
-});
 
-/* ===== DRAG MODE ===== */
-function enableDrag(enable) {
-    const elements = document.querySelectorAll(".links a");
+    else if (cmd === "/name") {
+        log("my name is alex");
+    }
 
-    elements.forEach(el => {
-        el.style.position = enable ? "absolute" : "";
-        el.style.cursor = enable ? "move" : "";
+    else if (cmd === "/mail") {
+        log("Contact me: itzmrolas@outlook.com");
+    }
 
-        if (!enable) return;
+    else if (cmd === "/chess") {
+        window.open("https://www.chess.com", "_blank");
+        log("opening chess.com");
+    }
 
-        el.onmousedown = (e) => {
-            let shiftX = e.clientX - el.getBoundingClientRect().left;
-            let shiftY = e.clientY - el.getBoundingClientRect().top;
+    else if (cmd === "/help") {
+        log("Commands:");
+        log("/time");
+        log("/open yt | tiktok | insta | spotify");
+        log("/chess");
+        log("/mail");
+    }
 
-            function moveAt(pageX, pageY) {
-                el.style.left = pageX - shiftX + "px";
-                el.style.top = pageY - shiftY + "px";
-            }
+    else if (cmd.startsWith("/open")) {
+        const arg = cmd.split(" ")[1];
 
-            function onMouseMove(e) {
-                moveAt(e.pageX, e.pageY);
-            }
-
-            document.addEventListener("mousemove", onMouseMove);
-
-            el.onmouseup = () => {
-                document.removeEventListener("mousemove", onMouseMove);
-                el.onmouseup = null;
-            };
+        const links = {
+            yt: "https://www.youtube.com/@itzmrolas",
+            youtube: "https://www.youtube.com/@itzmrolas",
+            tiktok: "https://www.tiktok.com/@itzmrolas",
+            insta: "https://www.instagram.com/itzmrolas",
+            instagram: "https://www.instagram.com/itzmrolas",
+            spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm"
         };
 
-        el.ondragstart = () => false;
-    });
-}
+        if (links[arg]) window.open(links[arg], "_blank");
+        else log("unknown platform");
+    }
+
+    else log("unknown command");
+});
 </script>
 
 </body>
