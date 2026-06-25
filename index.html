@@ -1,9 +1,11 @@
-Put your HTML text here<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ITZMROLAS</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
 * {
@@ -15,51 +17,49 @@ Put your HTML text here<!DOCTYPE html>
 body {
     height: 100vh;
     overflow: hidden;
-    background: #05060a;
-    font-family: Arial, sans-serif;
+    /* Darker, neutral gradient with barely a hint of color */
+    background: linear-gradient(135deg, #050608 0%, #12141a 50%, #050608 100%);
+    font-family: 'Montserrat', sans-serif;
     color: white;
     user-select: none;
 }
 
-/* canvas */
+/* canvas for ribbons */
 #particles {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
 }
 
-/* glow */
+/* Subtly moving ambient glow */
 .glow {
     position: absolute;
     width: 1500px;
     height: 1500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,120,255,0.35), transparent 65%);
-    filter: blur(120px);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.03), transparent 60%);
+    filter: blur(100px);
     mix-blend-mode: screen;
     z-index: 1;
-    animation: move 18s ease-in-out infinite;
+    animation: move 20s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .glow:nth-child(2) {
-    width: 1700px;
-    height: 1700px;
-    background: radial-gradient(circle, rgba(120,180,255,0.18), transparent 70%);
-    animation-duration: 24s;
-}
-
-.glow:nth-child(3) {
-    width: 1600px;
-    height: 1600px;
-    background: radial-gradient(circle, rgba(0,120,255,0.12), transparent 75%);
-    animation-duration: 30s;
+    width: 1800px;
+    height: 1800px;
+    background: radial-gradient(circle, rgba(100, 150, 255, 0.02), transparent 70%);
+    animation-duration: 28s;
+    animation-direction: reverse;
 }
 
 @keyframes move {
-    0% { transform: translate(-30%, -30%); }
-    50% { transform: translate(30%, 25%); }
-    100% { transform: translate(-30%, -30%); }
+    0% { transform: translate(-20%, -20%); }
+    50% { transform: translate(20%, 20%); }
+    100% { transform: translate(-20%, -20%); }
 }
 
 /* content */
@@ -76,80 +76,137 @@ body {
 
 h1 {
     font-size: 5rem;
-    letter-spacing: 6px;
+    font-weight: 300;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
 }
 
-/* buttons */
+/* buttons - Transparent & sharper edges */
 .links {
     display: flex;
-    gap: 12px;
+    gap: 16px;
     flex-wrap: wrap;
-    justify-content: center; /* Added to keep things centered if it wraps */
-    margin-top: 20px;
+    justify-content: center;
+    margin-top: 30px;
 }
 
 .links a {
-    padding: 12px 18px;
-    border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.2);
+    padding: 14px 28px;
+    border-radius: 4px; /* Less rounded */
+    border: 1px solid rgba(255, 255, 255, 0.15);
     text-decoration: none;
     color: white;
-    background: rgba(255,255,255,0.03);
-    transition: 0.2s;
+    font-weight: 400;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    background: transparent; /* Fully transparent back */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
 }
 
 .links a:hover {
     transform: translateY(-2px);
-    border-color: rgba(0,120,255,0.8);
-    background: rgba(0,120,255,0.25);
-    box-shadow: 0 0 25px rgba(0,120,255,0.4);
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05); /* Slight fill on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* ===== CONSOLE (TOP LAYER + DRAG FIX) ===== */
+/* ===== CONSOLE (TRANSPARENT & SHARPER EDGES) ===== */
 .console {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 30px;
+    left: 30px;
 
-    width: 280px;
-    height: 180px;
+    width: 320px;
+    height: 220px;
 
-    background: rgba(10,10,20,0.85);
-    border: 1px solid rgba(0,120,255,0.4);
-    border-radius: 10px;
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.2); /* Very transparent */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px; /* Less rounded */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-    z-index: 999999; /* 🔥 TOP LAYER FIX */
-
+    z-index: 999999;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.console.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
 }
 
 .console-header {
-    padding: 8px;
-    background: rgba(0,120,255,0.2);
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     cursor: grab;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.console-header::after {
+    content: "Press ESC to close";
+    font-size: 0.65rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.console-header:active {
+    cursor: grabbing;
+}
+
+.console-output {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 12px;
+    font-size: 13px;
+    font-family: monospace;
+    color: #ccc;
+    line-height: 1.4;
+}
+
+.console-output div {
+    margin-bottom: 4px;
 }
 
 .console input {
     width: 100%;
-    padding: 8px;
+    padding: 12px;
     border: none;
     outline: none;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.3);
     color: white;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    font-family: monospace;
+    font-size: 13px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.console input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
 }
 
-.console-output {
-    height: 110px;
-    overflow-y: auto;
-    padding: 8px;
-    font-size: 12px;
+/* Custom Scrollbar for console */
+.console-output::-webkit-scrollbar {
+    width: 6px;
 }
-
-.hidden {
-    display: none;
+.console-output::-webkit-scrollbar-track {
+    background: transparent;
+}
+.console-output::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
 }
 </style>
 </head>
@@ -160,122 +217,147 @@ h1 {
 
 <div class="glow"></div>
 <div class="glow"></div>
-<div class="glow"></div>
 
 <div class="content">
     <h1>ITZMROLAS</h1>
 
     <div class="links">
-        <a href="https://www.tiktok.com/@itzmrolas">TikTok</a>
-        <a href="https://www.instagram.com/itzmrolas">Instagram</a>
-        <a href="https://www.youtube.com/@itzmrolas">YouTube</a>
-        <a href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm">Spotify</a>
+        <a href="https://www.tiktok.com/@itzmrolas" target="_blank">TikTok</a>
+        <a href="https://www.instagram.com/itzmrolas" target="_blank">Instagram</a>
+        <a href="https://www.youtube.com/@itzmrolas" target="_blank">YouTube</a>
+        <a href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm" target="_blank">Spotify</a>
         <a href="https://itzmrolas.github.io/playarythmgame/" target="_blank">Rythm Game</a>
     </div>
 </div>
 
 <div id="console" class="console hidden">
     <div class="console-header" id="consoleHeader">DEV CONSOLE</div>
-    <input id="consoleInput" placeholder="Type command..." autocomplete="off" />
-    <div id="consoleOutput" class="console-output"></div>
+    <div id="consoleOutput" class="console-output">
+        <div style="color: #fff;">> System initialized. Type /help for commands.</div>
+    </div>
+    <input id="consoleInput" placeholder="Type command..." autocomplete="off" spellcheck="false" />
 </div>
 
 <script>
-/* ===== STARS ===== */
+/* ===== RIBBON CANVAS ANIMATION (Muted Colors) ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-class Star {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 1.2;
-        this.speedX = (Math.random() - 0.5) * 0.15;
-        this.speedY = (Math.random() - 0.5) * 0.15;
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x < 0) this.x = canvas.width;
-        if (this.x > canvas.width) this.x = 0;
-        if (this.y < 0) this.y = canvas.height;
-        if (this.y > canvas.height) this.y = 0;
-    }
-
-    draw() {
-        ctx.fillStyle = "white";
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
+let width, height;
+function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
 }
+window.addEventListener('resize', resize);
+resize();
 
-let stars = [];
-for (let i = 0; i < 70; i++) stars.push(new Star());
+let time = 0;
 
 function animate() {
-    ctx.fillStyle = "rgba(5,6,10,0.35)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, width, height);
+    time += 0.003;
 
-    stars.forEach(s => { s.update(); s.draw(); });
+    // Desaturated, transparent waves
+    const waves = [
+        { amplitude: 120, frequency: 0.001, speed: 1.5, color: "rgba(255, 255, 255, 0.02)", glow: "rgba(255, 255, 255, 0.1)", offset: 0 },
+        { amplitude: 180, frequency: 0.0015, speed: 1.2, color: "rgba(100, 150, 255, 0.01)", glow: "rgba(100, 150, 255, 0.08)", offset: Math.PI },
+        { amplitude: 100, frequency: 0.002, speed: 2.0, color: "rgba(255, 255, 255, 0.01)", glow: "rgba(255, 255, 255, 0.05)", offset: Math.PI / 2 }
+    ];
+
+    waves.forEach((w, index) => {
+        ctx.beginPath();
+        ctx.moveTo(-50, height / 2);
+
+        for (let x = -50; x <= width + 50; x += 30) {
+            let y = height / 2 
+                + Math.sin(x * w.frequency + time * w.speed + w.offset) * w.amplitude
+                + Math.cos(x * w.frequency * 0.5 - time) * 50;
+            ctx.lineTo(x, y);
+        }
+
+        ctx.lineTo(width + 50, height + 50);
+        ctx.lineTo(-50, height + 50);
+        ctx.closePath();
+
+        ctx.fillStyle = w.color;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(-50, height / 2);
+        for (let x = -50; x <= width + 50; x += 30) {
+            let y = height / 2 
+                + Math.sin(x * w.frequency + time * w.speed + w.offset) * w.amplitude
+                + Math.cos(x * w.frequency * 0.5 - time) * 50;
+            ctx.lineTo(x, y);
+        }
+        ctx.lineWidth = 1 + index * 0.5;
+        ctx.strokeStyle = w.glow;
+        ctx.stroke();
+    });
+
     requestAnimationFrame(animate);
 }
 animate();
 
-/* ===== CONSOLE ===== */
+/* ===== CONSOLE LOGIC ===== */
 const consoleBox = document.getElementById("console");
 const input = document.getElementById("consoleInput");
 const output = document.getElementById("consoleOutput");
 const header = document.getElementById("consoleHeader");
 
-/* toggle */
 window.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== input) {
         e.preventDefault();
         consoleBox.classList.toggle("hidden");
-        input.focus();
+        if (!consoleBox.classList.contains("hidden")) {
+            input.focus();
+        }
     }
 
     if (e.key === "Escape") {
         consoleBox.classList.add("hidden");
+        input.blur();
     }
 });
 
-function log(msg) {
-    output.innerHTML += `<div>> ${msg}</div>`;
+function log(msg, color = "#ccc") {
+    output.innerHTML += `<div style="color: ${color};">> ${msg}</div>`;
     output.scrollTop = output.scrollHeight;
 }
 
-/* commands */
 input.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
 
     const cmd = input.value.trim();
     input.value = "";
 
+    if (!cmd) return;
+
+    log(cmd, "#666");
+
     if (cmd === "/time") log(new Date().toLocaleTimeString());
-    else if (cmd === "/name") log("my name is alex");
+    else if (cmd === "/name") log("My name is Alex");
     else if (cmd === "/mail") log("Contact me: itzmrolas@outlook.com");
     else if (cmd === "/chess") {
         window.open("https://www.chess.com", "_blank");
-        log("opening chess.com");
+        log("Opening Chess.com...", "#fff");
     }
-    else if (cmd === "/rythm game") {
+    else if (cmd === "/rythm game" || cmd === "/rythm") {
         window.open("https://itzmrolas.github.io/playarythmgame/", "_blank");
-        log("opening rythm game");
+        log("Opening Rythm Game...", "#fff");
+    }
+    else if (cmd === "/clear") {
+        output.innerHTML = "";
     }
     else if (cmd === "/help") {
-        log("Commands:");
-        log("/time");
-        log("/open yt | tiktok | insta | spotify");
-        log("/chess");
-        log("/mail");
-        log("/rythm game");
+        log("Available Commands:");
+        log("  /time  - Shows current time");
+        log("  /name  - Displays my name");
+        log("  /mail  - Displays my contact email");
+        log("  /chess - Opens chess.com");
+        log("  /rythm - Opens my rythm game");
+        log("  /open [platform] - Opens specified social link");
+        log("  /clear - Clears the console");
     }
     else if (cmd.startsWith("/open")) {
         const arg = cmd.split(" ")[1];
@@ -289,36 +371,45 @@ input.addEventListener("keydown", (e) => {
             spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm"
         };
 
-        if (links[arg]) window.open(links[arg], "_blank");
-        else log("unknown platform");
+        if (links[arg]) {
+            window.open(links[arg], "_blank");
+            log(`Opening ${arg}...`, "#fff");
+        } else {
+            log("Unknown platform. Valid options: yt, tiktok, insta, spotify", "#ff6b6b");
+        }
     }
-    else log("unknown command");
+    else {
+        log("Unknown command. Type /help for a list of commands.", "#ff6b6b");
+    }
 });
 
-/* ===== DRAG CONSOLE (FIXED TOP LAYER DRAG) ===== */
+/* ===== DRAG CONSOLE ===== */
 let dragging = false;
 let offsetX = 0;
 let offsetY = 0;
 
 header.addEventListener("mousedown", (e) => {
     dragging = true;
-
     offsetX = e.clientX - consoleBox.offsetLeft;
     offsetY = e.clientY - consoleBox.offsetTop;
-
     document.body.style.cursor = "grabbing";
 });
 
 document.addEventListener("mousemove", (e) => {
     if (!dragging) return;
-
-    consoleBox.style.left = (e.clientX - offsetX) + "px";
-    consoleBox.style.top = (e.clientY - offsetY) + "px";
+    let newLeft = e.clientX - offsetX;
+    let newTop = e.clientY - offsetY;
+    newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - consoleBox.offsetWidth));
+    newTop = Math.max(0, Math.min(newTop, window.innerHeight - consoleBox.offsetHeight));
+    consoleBox.style.left = newLeft + "px";
+    consoleBox.style.top = newTop + "px";
 });
 
 document.addEventListener("mouseup", () => {
-    dragging = false;
-    document.body.style.cursor = "default";
+    if (dragging) {
+        dragging = false;
+        document.body.style.cursor = "default";
+    }
 });
 </script>
 
