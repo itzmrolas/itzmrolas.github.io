@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+Put your HTML text here<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -84,6 +84,8 @@ h1 {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    justify-content: center; /* Added to keep things centered if it wraps */
+    margin-top: 20px;
 }
 
 .links a {
@@ -168,13 +170,13 @@ h1 {
         <a href="https://www.instagram.com/itzmrolas">Instagram</a>
         <a href="https://www.youtube.com/@itzmrolas">YouTube</a>
         <a href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm">Spotify</a>
+        <a href="https://itzmrolas.github.io/playarythmgame/" target="_blank">Rythm Game</a>
     </div>
 </div>
 
-<!-- console -->
 <div id="console" class="console hidden">
     <div class="console-header" id="consoleHeader">DEV CONSOLE</div>
-    <input id="consoleInput" placeholder="Type command..." />
+    <input id="consoleInput" placeholder="Type command..." autocomplete="off" />
     <div id="consoleOutput" class="console-output"></div>
 </div>
 
@@ -263,12 +265,17 @@ input.addEventListener("keydown", (e) => {
         window.open("https://www.chess.com", "_blank");
         log("opening chess.com");
     }
+    else if (cmd === "/rythm game") {
+        window.open("https://itzmrolas.github.io/playarythmgame/", "_blank");
+        log("opening rythm game");
+    }
     else if (cmd === "/help") {
         log("Commands:");
         log("/time");
         log("/open yt | tiktok | insta | spotify");
         log("/chess");
         log("/mail");
+        log("/rythm game");
     }
     else if (cmd.startsWith("/open")) {
         const arg = cmd.split(" ")[1];
