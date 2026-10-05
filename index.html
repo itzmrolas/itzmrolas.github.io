@@ -3,11 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ITZMROLAS</title>
+<title>itzmrolas</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<!-- Website Icon (Favicon) -->
+<link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1EaL_6jyi4sAqkL_7S5hXsz2BZM9znvtX">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
 
 <style>
+:root {
+    --bg-dark: #050507;
+    --red-primary: #ff1a40;
+    --red-hover: #ff3355;
+    --red-glow: rgba(255, 26, 64, 0.4);
+    --card-bg: rgba(18, 10, 15, 0.55);
+    --card-border: rgba(255, 26, 64, 0.25);
+    --text-color: #ffffff;
+    --text-muted: #a0a0a8;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -15,152 +32,309 @@
 }
 
 body {
-    height: 100vh;
-    overflow: hidden;
-    /* Darker, neutral gradient with barely a hint of color */
-    background: linear-gradient(135deg, #050608 0%, #12141a 50%, #050608 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--bg-dark);
+    background: radial-gradient(circle at 50% 30%, #1a050a 0%, #050507 80%);
     font-family: 'Montserrat', sans-serif;
-    color: white;
+    color: var(--text-color);
     user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* canvas for ribbons */
+/* Background Canvas & Ambient Glows */
 #particles {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-}
-
-/* Subtly moving ambient glow */
-.glow {
-    position: absolute;
-    width: 1500px;
-    height: 1500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.03), transparent 60%);
-    filter: blur(100px);
-    mix-blend-mode: screen;
-    z-index: 1;
-    animation: move 20s ease-in-out infinite;
     pointer-events: none;
 }
 
-.glow:nth-child(2) {
-    width: 1800px;
-    height: 1800px;
-    background: radial-gradient(circle, rgba(100, 150, 255, 0.02), transparent 70%);
-    animation-duration: 28s;
-    animation-direction: reverse;
+.glow {
+    position: fixed;
+    width: 1000px;
+    height: 1000px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--red-glow), transparent 70%);
+    filter: blur(120px);
+    mix-blend-mode: screen;
+    z-index: 1;
+    animation: moveGlow 22s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
-@keyframes move {
-    0% { transform: translate(-20%, -20%); }
-    50% { transform: translate(20%, 20%); }
-    100% { transform: translate(-20%, -20%); }
+.glow-2 {
+    position: fixed;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 0, 40, 0.3), transparent 65%);
+    filter: blur(100px);
+    z-index: 1;
+    animation: moveGlow2 18s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
-/* content */
+@keyframes moveGlow {
+    0% { transform: translate(-30%, -20%); }
+    100% { transform: translate(20%, 20%); }
+}
+
+@keyframes moveGlow2 {
+    0% { transform: translate(30%, 30%); }
+    100% { transform: translate(-20%, -10%); }
+}
+
+/* Main Container */
 .content {
     position: relative;
     z-index: 2;
-    height: 100vh;
+    width: 100%;
+    max-width: 680px;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
 }
 
-h1 {
-    font-size: 5rem;
-    font-weight: 300;
-    letter-spacing: 12px;
+/* Profile / Title Section */
+.profile-title {
+    font-size: 3.8rem;
+    font-weight: 900;
+    letter-spacing: 10px;
     text-transform: uppercase;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 26, 64, 0.6), 0 0 40px rgba(255, 26, 64, 0.2);
+    margin-bottom: 6px;
 }
 
-/* buttons - Transparent & sharper edges */
+.tagline {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 35px;
+    font-weight: 500;
+}
+
+.tagline span {
+    color: var(--red-primary);
+}
+
+/* Social Links Grid */
 .links {
+    width: 100%;
     display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 30px;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 25px;
 }
 
-.links a {
-    padding: 14px 28px;
-    border-radius: 4px; /* Less rounded */
-    border: 1px solid rgba(255, 255, 255, 0.15);
+.link-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     text-decoration: none;
     color: white;
-    font-weight: 400;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 1.05rem;
     letter-spacing: 1px;
-    background: transparent; /* Fully transparent back */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-}
-
-.links a:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.6);
-    background: rgba(255, 255, 255, 0.05); /* Slight fill on hover */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* ===== CONSOLE (TRANSPARENT & SHARPER EDGES) ===== */
-.console {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-
-    width: 320px;
-    height: 220px;
-
-    background: rgba(0, 0, 0, 0.2); /* Very transparent */
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 4px; /* Less rounded */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
 
-    z-index: 999999;
+.link-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.link-card svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.link-card:hover {
+    transform: translateY(-3px) scale(1.01);
+    border-color: var(--red-primary);
+    background: rgba(35, 12, 20, 0.85);
+    box-shadow: 0 8px 25px rgba(255, 26, 64, 0.25);
+}
+
+.link-card:hover svg {
+    color: var(--red-primary);
+    transform: scale(1.15);
+}
+
+.link-arrow {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.link-card:hover .link-arrow {
+    transform: translateX(5px);
+    color: var(--red-primary);
+}
+
+/* Discord Username Textbox Container */
+.discord-box-container {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    text-align: left;
+}
+
+.discord-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--red-primary);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.discord-input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.discord-input {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 26, 64, 0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #ffffff;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discord-input:focus {
+    border-color: var(--red-primary);
+    box-shadow: 0 0 10px var(--red-glow);
+}
+
+.copy-btn {
+    background: var(--red-primary);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 0 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.copy-btn:hover {
+    background: var(--red-hover);
+    box-shadow: 0 0 15px var(--red-glow);
+    transform: translateY(-1px);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+}
+
+/* Toggle Console Button */
+.console-toggle-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: rgba(15, 8, 12, 0.8);
+    border: 1px solid var(--card-border);
+    color: var(--text-muted);
+    padding: 10px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-family: 'Fira Code', monospace;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.console-toggle-btn:hover {
+    color: #fff;
+    border-color: var(--red-primary);
+    box-shadow: 0 0 15px var(--red-glow);
+}
+
+/* Console Window */
+.console {
+    position: fixed;
+    bottom: 80px;
+    right: 25px;
+    width: 360px;
+    height: 250px;
+    background: rgba(8, 4, 6, 0.92);
+    border: 1px solid var(--red-primary);
+    border-radius: 10px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 26, 64, 0.2);
+    z-index: 999;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .console.hidden {
     opacity: 0;
     pointer-events: none;
-    transform: translateY(20px);
+    transform: translateY(15px) scale(0.95);
 }
 
 .console-header {
-    padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 14px;
+    background: rgba(255, 26, 64, 0.12);
+    border-bottom: 1px solid rgba(255, 26, 64, 0.25);
     cursor: grab;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     letter-spacing: 1px;
-    color: #fff;
+    color: var(--red-primary);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Fira Code', monospace;
 }
 
 .console-header::after {
-    content: "Press ESC to close";
+    content: "ESC to close";
     font-size: 0.65rem;
-    font-weight: 300;
     color: rgba(255, 255, 255, 0.4);
 }
 
@@ -172,10 +346,10 @@ h1 {
     flex-grow: 1;
     overflow-y: auto;
     padding: 12px;
-    font-size: 13px;
-    font-family: monospace;
-    color: #ccc;
-    line-height: 1.4;
+    font-size: 12px;
+    font-family: 'Fira Code', monospace;
+    color: #d0d0d0;
+    line-height: 1.5;
 }
 
 .console-output div {
@@ -184,29 +358,47 @@ h1 {
 
 .console input {
     width: 100%;
-    padding: 12px;
+    padding: 10px 12px;
     border: none;
     outline: none;
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
-    font-family: monospace;
-    font-size: 13px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    border-top: 1px solid rgba(255, 26, 64, 0.2);
 }
+
 .console input::placeholder {
     color: rgba(255, 255, 255, 0.3);
 }
 
-/* Custom Scrollbar for console */
+/* Custom Scrollbar */
 .console-output::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
 }
 .console-output::-webkit-scrollbar-track {
     background: transparent;
 }
 .console-output::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--red-primary);
     border-radius: 3px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .profile-title {
+        font-size: 2.8rem;
+        letter-spacing: 6px;
+    }
+    .link-card {
+        padding: 14px 18px;
+    }
+    .console {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+        bottom: 80px;
+    }
 }
 </style>
 </head>
@@ -214,31 +406,89 @@ h1 {
 <body>
 
 <canvas id="particles"></canvas>
-
 <div class="glow"></div>
-<div class="glow"></div>
+<div class="glow-2"></div>
 
 <div class="content">
-    <h1>ITZMROLAS</h1>
+    <h1 class="profile-title">ITZMROLAS</h1>
+    <p class="tagline">Official <span>Links</span> & Media</p>
 
     <div class="links">
-        <a href="https://www.tiktok.com/@itzmrolas" target="_blank">TikTok</a>
-        <a href="https://www.instagram.com/itzmrolas" target="_blank">Instagram</a>
-        <a href="https://www.youtube.com/@itzmrolas" target="_blank">YouTube</a>
-        <a href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm" target="_blank">Spotify</a>
+        <!-- YouTube -->
+        <a class="link-card" href="https://www.youtube.com/@itzmrolas" target="_blank" rel="noopener noreferrer">
+            <div class="link-left">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <span>YouTube</span>
+            </div>
+            <span class="link-arrow">&#x276F;</span>
+        </a>
+
+        <!-- TikTok -->
+        <a class="link-card" href="https://www.tiktok.com/@itzmrolas" target="_blank" rel="noopener noreferrer">
+            <div class="link-left">
+                <svg viewBox="0 0 24 24"><path d="M12.525 0h3.08c.12 1.05.65 2.08 1.48 2.82 1.01.9 2.37 1.39 3.76 1.39v3.23a8.1 8.1 0 0 1-3.69-.88c-.6-.32-1.15-.74-1.63-1.23v10.15c0 1.29-.33 2.56-.96 3.68a7.88 7.88 0 0 1-2.61 2.76A7.95 7.95 0 0 1 7.8 23a7.96 7.96 0 0 1-4.04-1.07 7.92 7.92 0 0 1-2.88-2.89A7.9 7.9 0 0 1 0 14.99c0-1.42.37-2.82 1.08-4.05a7.89 7.89 0 0 1 2.91-2.89A7.96 7.96 0 0 1 8.04 7v3.28a4.67 4.67 0 0 0-2.37.64 4.66 4.66 0 0 0-1.7 1.7 4.68 4.68 0 0 0-.62 2.37c0 .84.22 1.66.64 2.38.42.72 1.01 1.3 1.73 1.71a4.7 4.7 0 0 0 2.39.63c.84 0 1.66-.22 2.38-.64a4.67 4.67 0 0 0 1.71-1.72c.42-.72.63-1.54.63-2.38V0z"/></svg>
+                <span>TikTok</span>
+            </div>
+            <span class="link-arrow">&#x276F;</span>
+        </a>
+
+        <!-- Instagram -->
+        <a class="link-card" href="https://www.instagram.com/itzmrolas" target="_blank" rel="noopener noreferrer">
+            <div class="link-left">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <span>Instagram</span>
+            </div>
+            <span class="link-arrow">&#x276F;</span>
+        </a>
+
+        <!-- Spotify -->
+        <a class="link-card" href="https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm" target="_blank" rel="noopener noreferrer">
+            <div class="link-left">
+                <svg viewBox="0 0 24 24"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.899 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.48-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141 C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.301 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.18-.1.2-1.02-.36-.18-.6.36-1.021 1.02-1.2 4.2-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                <span>Spotify</span>
+            </div>
+            <span class="link-arrow">&#x276F;</span>
+        </a>
+
+        <!-- Discord Server Link -->
+        <a class="link-card" href="https://discord.gg/6nPEVJkJmH" target="_blank" rel="noopener noreferrer">
+            <div class="link-left">
+                <svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                <span>Discord Server</span>
+            </div>
+            <span class="link-arrow">&#x276F;</span>
+        </a>
+    </div>
+
+    <!-- Discord Textbox Section -->
+    <div class="discord-box-container">
+        <div class="discord-label">
+            <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
+            <span>Discord Username</span>
+        </div>
+        <div class="discord-input-group">
+            <input type="text" class="discord-input" id="discordUsername" value="itzmrolas" readonly />
+            <button class="copy-btn" id="copyBtn">Copy</button>
+        </div>
     </div>
 </div>
 
+<!-- Console Floating Toggle Button -->
+<button class="console-toggle-btn" id="toggleConsoleBtn">
+    <span>&gt;_ Dev Console</span>
+</button>
+
+<!-- Dev Console -->
 <div id="console" class="console hidden">
     <div class="console-header" id="consoleHeader">DEV CONSOLE</div>
     <div id="consoleOutput" class="console-output">
-        <div style="color: #fff;">> System initialized. Type /help for commands.</div>
+        <div style="color: var(--red-primary);">&gt; System initialized. Type /help for commands.</div>
     </div>
     <input id="consoleInput" placeholder="Type command..." autocomplete="off" spellcheck="false" />
 </div>
 
 <script>
-/* ===== RIBBON CANVAS ANIMATION (Muted Colors) ===== */
+/* ===== CRIMSON RIBBON / WAVE CANVAS ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -254,23 +504,23 @@ let time = 0;
 
 function animate() {
     ctx.clearRect(0, 0, width, height);
-    time += 0.003;
+    time += 0.0035;
 
-    // Desaturated, transparent waves
+    // Glowing Red/Crimson Waves
     const waves = [
-        { amplitude: 120, frequency: 0.001, speed: 1.5, color: "rgba(255, 255, 255, 0.02)", glow: "rgba(255, 255, 255, 0.1)", offset: 0 },
-        { amplitude: 180, frequency: 0.0015, speed: 1.2, color: "rgba(100, 150, 255, 0.01)", glow: "rgba(100, 150, 255, 0.08)", offset: Math.PI },
-        { amplitude: 100, frequency: 0.002, speed: 2.0, color: "rgba(255, 255, 255, 0.01)", glow: "rgba(255, 255, 255, 0.05)", offset: Math.PI / 2 }
+        { amplitude: 130, frequency: 0.001, speed: 1.4, color: "rgba(255, 26, 64, 0.03)", glow: "rgba(255, 26, 64, 0.25)", offset: 0 },
+        { amplitude: 170, frequency: 0.0012, speed: 1.1, color: "rgba(180, 0, 40, 0.02)", glow: "rgba(255, 50, 80, 0.15)", offset: Math.PI },
+        { amplitude: 90, frequency: 0.0018, speed: 1.8, color: "rgba(255, 26, 64, 0.02)", glow: "rgba(255, 26, 64, 0.1)", offset: Math.PI / 2 }
     ];
 
     waves.forEach((w, index) => {
         ctx.beginPath();
         ctx.moveTo(-50, height / 2);
 
-        for (let x = -50; x <= width + 50; x += 30) {
+        for (let x = -50; x <= width + 50; x += 25) {
             let y = height / 2 
                 + Math.sin(x * w.frequency + time * w.speed + w.offset) * w.amplitude
-                + Math.cos(x * w.frequency * 0.5 - time) * 50;
+                + Math.cos(x * w.frequency * 0.5 - time) * 45;
             ctx.lineTo(x, y);
         }
 
@@ -283,13 +533,13 @@ function animate() {
 
         ctx.beginPath();
         ctx.moveTo(-50, height / 2);
-        for (let x = -50; x <= width + 50; x += 30) {
+        for (let x = -50; x <= width + 50; x += 25) {
             let y = height / 2 
                 + Math.sin(x * w.frequency + time * w.speed + w.offset) * w.amplitude
-                + Math.cos(x * w.frequency * 0.5 - time) * 50;
+                + Math.cos(x * w.frequency * 0.5 - time) * 45;
             ctx.lineTo(x, y);
         }
-        ctx.lineWidth = 1 + index * 0.5;
+        ctx.lineWidth = 1.5;
         ctx.strokeStyle = w.glow;
         ctx.stroke();
     });
@@ -298,29 +548,53 @@ function animate() {
 }
 animate();
 
+/* ===== COPY DISCORD USERNAME ===== */
+const copyBtn = document.getElementById("copyBtn");
+const discordInput = document.getElementById("discordUsername");
+
+copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(discordInput.value).then(() => {
+        copyBtn.innerText = "Copied!";
+        copyBtn.style.background = "#28a745";
+        setTimeout(() => {
+            copyBtn.innerText = "Copy";
+            copyBtn.style.background = "var(--red-primary)";
+        }, 2000);
+    }).catch(err => {
+        console.error("Failed to copy text: ", err);
+    });
+});
+
 /* ===== CONSOLE LOGIC ===== */
 const consoleBox = document.getElementById("console");
 const input = document.getElementById("consoleInput");
 const output = document.getElementById("consoleOutput");
 const header = document.getElementById("consoleHeader");
+const toggleConsoleBtn = document.getElementById("toggleConsoleBtn");
+
+function toggleConsole() {
+    consoleBox.classList.toggle("hidden");
+    if (!consoleBox.classList.contains("hidden")) {
+        input.focus();
+    }
+}
+
+toggleConsoleBtn.addEventListener("click", toggleConsole);
 
 window.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== input) {
         e.preventDefault();
-        consoleBox.classList.toggle("hidden");
-        if (!consoleBox.classList.contains("hidden")) {
-            input.focus();
-        }
+        toggleConsole();
     }
 
-    if (e.key === "Escape") {
+    if (e.key === "Escape" && !consoleBox.classList.contains("hidden")) {
         consoleBox.classList.add("hidden");
         input.blur();
     }
 });
 
-function log(msg, color = "#ccc") {
-    output.innerHTML += `<div style="color: ${color};">> ${msg}</div>`;
+function log(msg, color = "#d0d0d0") {
+    output.innerHTML += `<div style="color: ${color};">&gt; ${msg}</div>`;
     output.scrollTop = output.scrollHeight;
 }
 
@@ -332,18 +606,18 @@ input.addEventListener("keydown", (e) => {
 
     if (!cmd) return;
 
-    log(cmd, "#666");
+    log(cmd, "#888");
 
     if (cmd === "/time") log(new Date().toLocaleTimeString());
     else if (cmd === "/name") log("My name is Alex");
     else if (cmd === "/mail") log("Contact me: itzmrolas@outlook.com");
     else if (cmd === "/chess") {
         window.open("https://www.chess.com", "_blank");
-        log("Opening Chess.com...", "#fff");
+        log("Opening Chess.com...", "#ff1a40");
     }
     else if (cmd === "/rythm game" || cmd === "/rythm") {
         window.open("https://itzmrolas.github.io/playarythmgame/", "_blank");
-        log("Opening Rythm Game...", "#fff");
+        log("Opening Rythm Game...", "#ff1a40");
     }
     else if (cmd === "/clear") {
         output.innerHTML = "";
@@ -367,18 +641,19 @@ input.addEventListener("keydown", (e) => {
             tiktok: "https://www.tiktok.com/@itzmrolas",
             insta: "https://www.instagram.com/itzmrolas",
             instagram: "https://www.instagram.com/itzmrolas",
-            spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm"
+            spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm",
+            discord: "https://discord.gg/6nPEVJkJmH"
         };
 
         if (links[arg]) {
             window.open(links[arg], "_blank");
-            log(`Opening ${arg}...`, "#fff");
+            log(`Opening ${arg}...`, "#ff1a40");
         } else {
-            log("Unknown platform. Valid options: yt, tiktok, insta, spotify", "#ff6b6b");
+            log("Unknown platform. Options: yt, tiktok, insta, spotify, discord", "#ff4d4d");
         }
     }
     else {
-        log("Unknown command. Type /help for a list of commands.", "#ff6b6b");
+        log("Unknown command. Type /help for options.", "#ff4d4d");
     }
 });
 
