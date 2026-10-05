@@ -192,8 +192,8 @@ body {
     color: var(--red-primary);
 }
 
-/* Discord Username Textbox Container */
-.discord-box-container {
+/* Textbox Containers (Discord & Bank) */
+.info-box-container {
     width: 100%;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -203,9 +203,10 @@ body {
     -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     text-align: left;
+    margin-bottom: 14px;
 }
 
-.discord-label {
+.info-label {
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -217,12 +218,12 @@ body {
     gap: 8px;
 }
 
-.discord-input-group {
+.info-input-group {
     display: flex;
     gap: 10px;
 }
 
-.discord-input {
+.info-input {
     flex: 1;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 26, 64, 0.3);
@@ -230,12 +231,12 @@ body {
     padding: 12px 16px;
     color: #ffffff;
     font-family: 'Fira Code', monospace;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.discord-input:focus {
+.info-input:focus {
     border-color: var(--red-primary);
     box-shadow: 0 0 10px var(--red-glow);
 }
@@ -458,17 +459,38 @@ body {
             </div>
             <span class="link-arrow">&#x276F;</span>
         </a>
+
+        <!-- Support / PayPal -->
+        <a class="link-card" href="https://paypal.me/itzmrolas" target="_blank" rel="noopener noreferrer">
+            <div class="link-left">
+                <svg viewBox="0 0 24 24"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .761-.65h6.398c2.906 0 5.105.748 5.86 2.083.69 1.22.427 2.923-.621 4.296-1.127 1.474-3.003 2.302-5.426 2.302H9.255a.641.641 0 0 0-.633.54l-.87 5.518-.016.103-.66 4.185a.641.641 0 0 1-.633.54h-.367zm12.37-13.43c-.443-.781-1.428-1.258-2.768-1.335h-5.01l-2.09 13.25h1.868a.641.641 0 0 0 .633-.54l.87-5.518a.77.77 0 0 1 .761-.65h1.232c3.55 0 6.136-1.393 6.942-3.87.327-1.006.185-1.921-.438-2.337z"/></svg>
+                <span>Support (PayPal)</span>
+            </div>
+            <span class="link-arrow">&#x276F;</span>
+        </a>
     </div>
 
     <!-- Discord Textbox Section -->
-    <div class="discord-box-container">
-        <div class="discord-label">
+    <div class="info-box-container">
+        <div class="info-label">
             <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/></svg>
             <span>Discord Username</span>
         </div>
-        <div class="discord-input-group">
-            <input type="text" class="discord-input" id="discordUsername" value="itzmrolas" readonly />
+        <div class="info-input-group">
+            <input type="text" class="info-input" id="discordUsername" value="itzmrolas" readonly />
             <button class="copy-btn" id="copyBtn">Copy</button>
+        </div>
+    </div>
+
+    <!-- Bank Account Section -->
+    <div class="info-box-container">
+        <div class="info-label">
+            <svg style="width:16px;height:16px;fill:currentColor;" viewBox="0 0 24 24"><path d="M4 10h2v7H4zm6 0h2v7h-2zm6 0h2v7h-2zM2 22h20v-3H2v3zm10-20L2 6v2h20V6l-10-4z"/></svg>
+            <span>Bank Transfer (PLN)</span>
+        </div>
+        <div class="info-input-group">
+            <input type="text" class="info-input" id="bankAccount" value="26 1050 1445 1000 0098 5161 0189" readonly />
+            <button class="copy-btn" id="copyBankBtn">Copy</button>
         </div>
     </div>
 </div>
@@ -565,6 +587,23 @@ copyBtn.addEventListener("click", () => {
     });
 });
 
+/* ===== COPY BANK ACCOUNT ===== */
+const copyBankBtn = document.getElementById("copyBankBtn");
+const bankInput = document.getElementById("bankAccount");
+
+copyBankBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(bankInput.value).then(() => {
+        copyBankBtn.innerText = "Copied!";
+        copyBankBtn.style.background = "#28a745";
+        setTimeout(() => {
+            copyBankBtn.innerText = "Copy";
+            copyBankBtn.style.background = "var(--red-primary)";
+        }, 2000);
+    }).catch(err => {
+        console.error("Failed to copy text: ", err);
+    });
+});
+
 /* ===== CONSOLE LOGIC ===== */
 const consoleBox = document.getElementById("console");
 const input = document.getElementById("consoleInput");
@@ -642,14 +681,15 @@ input.addEventListener("keydown", (e) => {
             insta: "https://www.instagram.com/itzmrolas",
             instagram: "https://www.instagram.com/itzmrolas",
             spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm",
-            discord: "https://discord.gg/6nPEVJkJmH"
+            discord: "https://discord.gg/6nPEVJkJmH",
+            paypal: "https://paypal.me/itzmrolas"
         };
 
         if (links[arg]) {
             window.open(links[arg], "_blank");
             log(`Opening ${arg}...`, "#ff1a40");
         } else {
-            log("Unknown platform. Options: yt, tiktok, insta, spotify, discord", "#ff4d4d");
+            log("Unknown platform. Options: yt, tiktok, insta, spotify, discord, paypal", "#ff4d4d");
         }
     }
     else {
