@@ -41,8 +41,7 @@ body {
     color: var(--text-color);
     user-select: none;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -92,136 +91,6 @@ body {
     100% { transform: translate(-20%, -10%); }
 }
 
-/* Top Right Auth Container & Menu */
-.auth-top-right {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-}
-
-.auth-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 18px;
-    border-radius: 30px;
-    background: var(--card-bg);
-    border: 1px solid rgba(66, 133, 244, 0.4);
-    color: white;
-    font-weight: 600;
-    font-size: 0.85rem;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
-
-.auth-btn svg {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
-}
-
-.auth-btn img.user-avatar {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.auth-btn:hover {
-    border-color: #4285F4;
-    background: rgba(18, 25, 40, 0.85);
-    box-shadow: 0 0 15px rgba(66, 133, 244, 0.4);
-    transform: translateY(-2px);
-}
-
-/* Account Dropdown Menu */
-.account-menu {
-    position: absolute;
-    top: calc(100% + 12px);
-    right: 0;
-    width: 270px;
-    background: rgba(12, 6, 10, 0.95);
-    border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 18px;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px rgba(255, 26, 64, 0.15);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.account-menu.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.menu-avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 2px solid var(--red-primary);
-    box-shadow: 0 0 12px var(--red-glow);
-}
-
-.menu-info {
-    width: 100%;
-    overflow: hidden;
-}
-
-.menu-name {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.menu-email {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-family: 'Fira Code', monospace;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 4px;
-}
-
-.menu-logout-btn {
-    width: 100%;
-    margin-top: 6px;
-    padding: 10px;
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    background: rgba(255, 26, 64, 0.1);
-    color: var(--red-primary);
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.menu-logout-btn:hover {
-    background: var(--red-primary);
-    color: white;
-    box-shadow: 0 0 15px var(--red-glow);
-}
-
 /* Main Container */
 .content {
     position: relative;
@@ -233,7 +102,6 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: auto 0;
 }
 
 /* Profile / Title Section */
@@ -286,7 +154,6 @@ body {
     -webkit-backdrop-filter: blur(12px);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
 }
 
 .link-left {
@@ -325,7 +192,7 @@ body {
     color: var(--red-primary);
 }
 
-/* Textbox Containers */
+/* Textbox Containers (Discord & Bank) */
 .info-box-container {
     width: 100%;
     background: var(--card-bg);
@@ -395,28 +262,11 @@ body {
     transform: translateY(-1px);
 }
 
-/* Footer Section */
-footer {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    padding: 20px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
+.copy-btn:active {
+    transform: translateY(0);
 }
 
-footer a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: var(--red-primary);
-}
-
-/* Console Toggle Button */
+/* Toggle Console Button */
 .console-toggle-btn {
     position: fixed;
     bottom: 25px;
@@ -432,6 +282,9 @@ footer a:hover {
     backdrop-filter: blur(10px);
     z-index: 100;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .console-toggle-btn:hover {
@@ -480,6 +333,16 @@ footer a:hover {
     font-family: 'Fira Code', monospace;
 }
 
+.console-header::after {
+    content: "ESC to close";
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.console-header:active {
+    cursor: grabbing;
+}
+
 .console-output {
     flex-grow: 1;
     overflow-y: auto;
@@ -488,6 +351,10 @@ footer a:hover {
     font-family: 'Fira Code', monospace;
     color: #d0d0d0;
     line-height: 1.5;
+}
+
+.console-output div {
+    margin-bottom: 4px;
 }
 
 .console input {
@@ -502,40 +369,42 @@ footer a:hover {
     border-top: 1px solid rgba(255, 26, 64, 0.2);
 }
 
+.console input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Custom Scrollbar */
+.console-output::-webkit-scrollbar {
+    width: 5px;
+}
+.console-output::-webkit-scrollbar-track {
+    background: transparent;
+}
+.console-output::-webkit-scrollbar-thumb {
+    background: var(--red-primary);
+    border-radius: 3px;
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 600px) {
-    .auth-top-right {
-        top: 15px;
-        right: 15px;
-    }
     .profile-title {
         font-size: 2.8rem;
         letter-spacing: 6px;
+    }
+    .link-card {
+        padding: 14px 18px;
+    }
+    .console {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+        bottom: 80px;
     }
 }
 </style>
 </head>
 
 <body>
-
-<!-- Top Right Auth Button & Menu -->
-<div class="auth-top-right">
-    <button class="auth-btn" id="loginBtn">
-        <span id="loginIcon">
-            <svg viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
-        </span>
-        <span id="loginText">Sign In</span>
-    </button>
-
-    <!-- Dropdown Account Card -->
-    <div class="account-menu" id="accountMenu">
-        <img class="menu-avatar" id="menuAvatar" src="" alt="Profile Picture">
-        <div class="menu-info">
-            <div class="menu-name" id="menuName">--</div>
-            <div class="menu-email" id="menuEmail">--</div>
-        </div>
-        <button class="menu-logout-btn" id="logoutBtn">Sign Out</button>
-    </div>
-</div>
 
 <canvas id="particles"></canvas>
 <div class="glow"></div>
@@ -546,7 +415,6 @@ footer a:hover {
     <p class="tagline">Official <span>Links</span> & Media</p>
 
     <div class="links">
-
         <!-- YouTube -->
         <a class="link-card" href="https://www.youtube.com/@itzmrolas" target="_blank" rel="noopener noreferrer">
             <div class="link-left">
@@ -622,15 +490,10 @@ footer a:hover {
         </div>
         <div class="info-input-group">
             <input type="text" class="info-input" id="bankAccount" value="26 1050 1445 1000 0098 5161 0189" readonly />
-            <button class="copy-bank-btn copy-btn" id="copyBankBtn">Copy</button>
+            <button class="copy-btn" id="copyBankBtn">Copy</button>
         </div>
     </div>
 </div>
-
-<!-- Footer -->
-<footer>
-    <a href="https://itzmrolas.eu/privacypolicy">Privacy Policy</a>
-</footer>
 
 <!-- Console Floating Toggle Button -->
 <button class="console-toggle-btn" id="toggleConsoleBtn">
@@ -647,7 +510,7 @@ footer a:hover {
 </div>
 
 <script>
-/* ===== CANVAS BACKGROUND ===== */
+/* ===== CRIMSON RIBBON / WAVE CANVAS ===== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 
@@ -660,28 +523,33 @@ window.addEventListener('resize', resize);
 resize();
 
 let time = 0;
+
 function animate() {
     ctx.clearRect(0, 0, width, height);
     time += 0.0035;
 
+    // Glowing Red/Crimson Waves
     const waves = [
         { amplitude: 130, frequency: 0.001, speed: 1.4, color: "rgba(255, 26, 64, 0.03)", glow: "rgba(255, 26, 64, 0.25)", offset: 0 },
         { amplitude: 170, frequency: 0.0012, speed: 1.1, color: "rgba(180, 0, 40, 0.02)", glow: "rgba(255, 50, 80, 0.15)", offset: Math.PI },
         { amplitude: 90, frequency: 0.0018, speed: 1.8, color: "rgba(255, 26, 64, 0.02)", glow: "rgba(255, 26, 64, 0.1)", offset: Math.PI / 2 }
     ];
 
-    waves.forEach((w) => {
+    waves.forEach((w, index) => {
         ctx.beginPath();
         ctx.moveTo(-50, height / 2);
+
         for (let x = -50; x <= width + 50; x += 25) {
             let y = height / 2 
                 + Math.sin(x * w.frequency + time * w.speed + w.offset) * w.amplitude
                 + Math.cos(x * w.frequency * 0.5 - time) * 45;
             ctx.lineTo(x, y);
         }
+
         ctx.lineTo(width + 50, height + 50);
         ctx.lineTo(-50, height + 50);
         ctx.closePath();
+
         ctx.fillStyle = w.color;
         ctx.fill();
 
@@ -702,23 +570,37 @@ function animate() {
 }
 animate();
 
-/* ===== COPY DISCORD ===== */
-document.getElementById("copyBtn").addEventListener("click", () => {
-    navigator.clipboard.writeText(document.getElementById("discordUsername").value).then(() => {
-        const btn = document.getElementById("copyBtn");
-        btn.innerText = "Copied!";
-        btn.style.background = "#28a745";
-        setTimeout(() => { btn.innerText = "Copy"; btn.style.background = "var(--red-primary)"; }, 2000);
+/* ===== COPY DISCORD USERNAME ===== */
+const copyBtn = document.getElementById("copyBtn");
+const discordInput = document.getElementById("discordUsername");
+
+copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(discordInput.value).then(() => {
+        copyBtn.innerText = "Copied!";
+        copyBtn.style.background = "#28a745";
+        setTimeout(() => {
+            copyBtn.innerText = "Copy";
+            copyBtn.style.background = "var(--red-primary)";
+        }, 2000);
+    }).catch(err => {
+        console.error("Failed to copy text: ", err);
     });
 });
 
-/* ===== COPY BANK ===== */
-document.getElementById("copyBankBtn").addEventListener("click", () => {
-    navigator.clipboard.writeText(document.getElementById("bankAccount").value).then(() => {
-        const btn = document.getElementById("copyBankBtn");
-        btn.innerText = "Copied!";
-        btn.style.background = "#28a745";
-        setTimeout(() => { btn.innerText = "Copy"; btn.style.background = "var(--red-primary)"; }, 2000);
+/* ===== COPY BANK ACCOUNT ===== */
+const copyBankBtn = document.getElementById("copyBankBtn");
+const bankInput = document.getElementById("bankAccount");
+
+copyBankBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(bankInput.value).then(() => {
+        copyBankBtn.innerText = "Copied!";
+        copyBankBtn.style.background = "#28a745";
+        setTimeout(() => {
+            copyBankBtn.innerText = "Copy";
+            copyBankBtn.style.background = "var(--red-primary)";
+        }, 2000);
+    }).catch(err => {
+        console.error("Failed to copy text: ", err);
     });
 });
 
@@ -726,18 +608,24 @@ document.getElementById("copyBankBtn").addEventListener("click", () => {
 const consoleBox = document.getElementById("console");
 const input = document.getElementById("consoleInput");
 const output = document.getElementById("consoleOutput");
+const header = document.getElementById("consoleHeader");
+const toggleConsoleBtn = document.getElementById("toggleConsoleBtn");
 
-document.getElementById("toggleConsoleBtn").addEventListener("click", () => {
+function toggleConsole() {
     consoleBox.classList.toggle("hidden");
-    if (!consoleBox.classList.contains("hidden")) input.focus();
-});
+    if (!consoleBox.classList.contains("hidden")) {
+        input.focus();
+    }
+}
+
+toggleConsoleBtn.addEventListener("click", toggleConsole);
 
 window.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement !== input) {
         e.preventDefault();
-        consoleBox.classList.remove("hidden");
-        input.focus();
+        toggleConsole();
     }
+
     if (e.key === "Escape" && !consoleBox.classList.contains("hidden")) {
         consoleBox.classList.add("hidden");
         input.blur();
@@ -751,101 +639,92 @@ function log(msg, color = "#d0d0d0") {
 
 input.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
+
     const cmd = input.value.trim();
     input.value = "";
+
     if (!cmd) return;
 
     log(cmd, "#888");
+
     if (cmd === "/time") log(new Date().toLocaleTimeString());
     else if (cmd === "/name") log("My name is Alex");
     else if (cmd === "/mail") log("Contact me: itzmrolas@outlook.com");
-    else if (cmd === "/clear") output.innerHTML = "";
+    else if (cmd === "/chess") {
+        window.open("https://www.chess.com", "_blank");
+        log("Opening Chess.com...", "#ff1a40");
+    }
+    else if (cmd === "/rythm game" || cmd === "/rythm") {
+        window.open("https://itzmrolas.github.io/playarythmgame/", "_blank");
+        log("Opening Rythm Game...", "#ff1a40");
+    }
+    else if (cmd === "/clear") {
+        output.innerHTML = "";
+    }
     else if (cmd === "/help") {
-        log("Commands: /time, /name, /mail, /clear");
-    } else {
-        log("Unknown command. Type /help", "#ff4d4d");
+        log("Available Commands:");
+        log("  /time  - Shows current time");
+        log("  /name  - Displays my name");
+        log("  /mail  - Displays my contact email");
+        log("  /chess - Opens chess.com");
+        log("  /rythm - Opens my rythm game");
+        log("  /open [platform] - Opens specified social link");
+        log("  /clear - Clears the console");
+    }
+    else if (cmd.startsWith("/open")) {
+        const arg = cmd.split(" ")[1];
+
+        const links = {
+            yt: "https://www.youtube.com/@itzmrolas",
+            youtube: "https://www.youtube.com/@itzmrolas",
+            tiktok: "https://www.tiktok.com/@itzmrolas",
+            insta: "https://www.instagram.com/itzmrolas",
+            instagram: "https://www.instagram.com/itzmrolas",
+            spotify: "https://open.spotify.com/user/31lk4chceqkrc6xcaa2kurtlyfbm",
+            discord: "https://discord.gg/6nPEVJkJmH",
+            paypal: "https://paypal.me/itzmrolas"
+        };
+
+        if (links[arg]) {
+            window.open(links[arg], "_blank");
+            log(`Opening ${arg}...`, "#ff1a40");
+        } else {
+            log("Unknown platform. Options: yt, tiktok, insta, spotify, discord, paypal", "#ff4d4d");
+        }
+    }
+    else {
+        log("Unknown command. Type /help for options.", "#ff4d4d");
     }
 });
-</script>
 
-<!-- ===== FIREBASE GOOGLE SIGN-IN & MENU ===== -->
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+/* ===== DRAG CONSOLE ===== */
+let dragging = false;
+let offsetX = 0;
+let offsetY = 0;
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBPbCa9zMydqY3Y5jC6uOMmKpiE5nc2OYg",
-      authDomain: "itzmrolas.firebaseapp.com",
-      projectId: "itzmrolas",
-      storageBucket: "itzmrolas.firebasestorage.app",
-      messagingSenderId: "505439889223",
-      appId: "1:505439889223:web:85184795f89b7a23084e62"
-    };
+header.addEventListener("mousedown", (e) => {
+    dragging = true;
+    offsetX = e.clientX - consoleBox.offsetLeft;
+    offsetY = e.clientY - consoleBox.offsetTop;
+    document.body.style.cursor = "grabbing";
+});
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+document.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    let newLeft = e.clientX - offsetX;
+    let newTop = e.clientY - offsetY;
+    newLeft = Math.max(0, Math.min(newLeft, window.innerWidth - consoleBox.offsetWidth));
+    newTop = Math.max(0, Math.min(newTop, window.innerHeight - consoleBox.offsetHeight));
+    consoleBox.style.left = newLeft + "px";
+    consoleBox.style.top = newTop + "px";
+});
 
-    const loginBtn = document.getElementById('loginBtn');
-    const loginText = document.getElementById('loginText');
-    const loginIcon = document.getElementById('loginIcon');
-    
-    const accountMenu = document.getElementById('accountMenu');
-    const menuAvatar = document.getElementById('menuAvatar');
-    const menuName = document.getElementById('menuName');
-    const menuEmail = document.getElementById('menuEmail');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    const defaultGoogleSvg = `<svg viewBox="0 0 24 24"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>`;
-
-    // Track authentication state changes
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const firstName = user.displayName ? user.displayName.split(' ')[0] : 'User';
-        const photoUrl = user.photoURL || 'https://via.placeholder.com/150';
-
-        loginText.innerText = firstName;
-        loginIcon.innerHTML = `<img src="${photoUrl}" class="user-avatar" alt="User">`;
-
-        // Populate dropdown card details
-        menuName.innerText = user.displayName || 'No Name Provided';
-        menuEmail.innerText = user.email || 'No Email Provided';
-        menuAvatar.src = photoUrl;
-      } else {
-        loginText.innerText = "Sign In";
-        loginIcon.innerHTML = defaultGoogleSvg;
-        accountMenu.classList.remove('active');
-      }
-    });
-
-    // Top Right Button Click
-    loginBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (auth.currentUser) {
-        // Toggle Dropdown Menu
-        accountMenu.classList.toggle('active');
-      } else {
-        // Trigger Google Login
-        signInWithPopup(auth, provider).catch((error) => {
-          console.error("Auth Error:", error);
-          alert(`Login Failed!\n\nReason: ${error.code}`);
-        });
-      }
-    });
-
-    // Logout Action Inside Dropdown
-    logoutBtn.addEventListener('click', () => {
-      signOut(auth).then(() => {
-        accountMenu.classList.remove('active');
-      }).catch((err) => console.error(err));
-    });
-
-    // Close menu when clicking outside
-    window.addEventListener('click', (e) => {
-      if (!accountMenu.contains(e.target) && !loginBtn.contains(e.target)) {
-        accountMenu.classList.remove('active');
-      }
-    });
+document.addEventListener("mouseup", () => {
+    if (dragging) {
+        dragging = false;
+        document.body.style.cursor = "default";
+    }
+});
 </script>
 
 </body>
