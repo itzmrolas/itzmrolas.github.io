@@ -640,7 +640,7 @@ input.addEventListener("keydown", (e) => {
 <!-- ===== FIREBASE GOOGLE SIGN-IN ===== -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getAuth, signInWithPopup, signOut, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBPbCa9zMydqY3Y5jC6uOMmKpiE5nc2OYg",
@@ -655,17 +655,37 @@ input.addEventListener("keydown", (e) => {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    document.getElementById('loginBtn').addEventListener('click', () => {
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          const userName = result.user.displayName;
-          document.getElementById('loginText').innerText = userName.split(' ')[0];
-          alert(`Logged in as ${userName}`);
-        })
-        .catch((error) => {
-          console.error("Auth Error:", error);
-          alert(`Login Failed!\n\nReason: ${error.code}\n\nMake sure you are running via a local web server (like VS Code Live Server) and not opening the file directly.`);
-        });
+    const loginBtn = document.getElementById('loginBtn');
+    const loginText = document.getElementById('loginText');
+
+    // Track authentication state changes
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const firstName = user.displayName ? user.displayName.split(' ')[0] : 'User';
+        loginText.innerText = firstName;
+      } else {
+        loginText.innerText = "Sign In";
+      }
+    });
+
+    loginBtn.addEventListener('click', () => {
+      if (auth.currentUser) {
+        // Toggle Sign Out if clicked while logged in
+        signOut(auth).then(() => {
+          alert('Logged out successfully');
+        }).catch((err) => console.error(err));
+      } else {
+        // Sign In
+        signInWithPopup(auth, provider)
+          .then((result) => {
+            const userName = result.user.displayName;
+            alert(`Logged in as ${userName}`);
+          })
+          .catch((error) => {
+            console.error("Auth Error:", error);
+            alert(`Login Failed!\n\nReason: ${error.code}\n\nMake sure you are running via a local web server (like VS Code Live Server) or hosted domain.`);
+          });
+      }
     });
 </script>
 
